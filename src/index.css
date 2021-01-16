@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  --base-color-white: #ffffff;
+  --base-color-deep-orange: #ff7043;
+  --base-color-deep-orange-hover: #ff8a65;
+  --base-color-grey: #91888E;
+  --base-color-pinkish-grey: #cccccc;
+  --base-color-shadow: rgba(0, 0, 0, 0.2);
+  --base-color-border: #e6e6e6;
+  --base-color-text: #333333;
+  --base-color-error: #ff5863;
+  --base-color-success: #2ecc71;
+  --base-color-link: #4c8afe;
+  --base-color-link-hover: #6f9ef5;
+  font-family: 'Montserrat', 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
