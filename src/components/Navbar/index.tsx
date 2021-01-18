@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ReactComponent as OzielLogo } from "../../assets/logo-navbar-oziel.svg";
 import { ReactComponent as LinkedinLogo } from "../../assets/linkedin-brand.svg";
 import { ReactComponent as GithubLogo } from "../../assets/github-brand.svg";
-import { Text, ContainerWrapper } from "../../styles";
+import { SubTitle as LogoText, ContainerWrapper, Wrapper } from "../../styles";
 
 const Navbar = () => {
   return (
@@ -14,18 +14,18 @@ const Navbar = () => {
       </Wrapper>
       <Wrapper /* style={{marginTop: 5}} */>
         <a
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", margin: "5px 0 0 24px" }}
           href="https://www.linkedin.com/in/ozielalves/"
           title="Linkedin - Oziel Alves"
         >
           <LinkedinIcon />
         </a>
         <a
-          style={{ textDecoration: "none", marginLeft: 24 }}
+          style={{ textDecoration: "none", margin: "5px 0 0 24px" }}
           href="https://github.com/ozielalves"
           title="GitHub - Oziel Alves"
         >
-          <GithubIcon style={{ marginLeft: 24 }} />
+          <GithubIcon />
         </a>
       </Wrapper>
     </StyledWrapper>
@@ -35,28 +35,14 @@ const Navbar = () => {
 const StyledWrapper = styled(ContainerWrapper)`
   height: 73px;
   justify-content: space-between;
-  padding: 0 48px;
+  padding: 0 117px;
   border: 1px solid var(--base-color-border);
   border-left: none;
   border-right: none;
   border-top: none;
-`;
-
-const Wrapper = styled(ContainerWrapper)`
-  width: auto;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const LogoText = styled(Text)`
-  font-weight: bold;
-  font-size: 26.6967px;
-  line-height: 33px;
 
   @media (max-width: 600px) {
-    font-size: 1.2rem;
+    padding: 0 48px;
   }
 `;
 

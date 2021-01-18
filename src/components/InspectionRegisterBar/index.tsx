@@ -2,25 +2,30 @@ import React, { FormEvent } from "react";
 import styled from "styled-components";
 import { ReactComponent as SearchIcon } from "../../assets/search-icon.svg";
 import { ContainerWrapper, Input, Text } from "../../styles";
-import Button from "../ActionButton";
+import ActionButton from "../ActionButton";
+import CircularProgress from "../CircularProgress";
 
 interface InspectionRegisterProps {
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   keyword: string;
   handleSubmit: (e: FormEvent) => void;
+  emptySubmission: boolean;
+  isLoading: boolean;
 }
 
 const InspectionRegisterBar = ({
   keyword,
   setKeyword,
   handleSubmit,
+  emptySubmission,
+  isLoading,
 }: InspectionRegisterProps) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <StyledWrapper>
+    <StyledForm onSubmit={handleSubmit}>
+      <StyledWrapper className={emptySubmission ? "shake" : ""}>
         <SearchIcon className="search-icon" />
         <StyledInput
-          required
+          /* required */
           id="key"
           type="text"
           name="key"
@@ -30,32 +35,45 @@ const InspectionRegisterBar = ({
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
         />
-        <Button color={"secondary"}>
-          <Text style={{ fontWeight: "bold", color: "var(--base-color-text)" }}>
-            Solicitar busca
-          </Text>
-          <SearchIcon
-            style={{ color: "var(--base-color-white)" }}
-            className="button-search-icon"
-          />
-        </Button>
+        {!isLoading ? (
+          <ActionButton color={"secondary"}>
+            <Text
+              style={{ fontWeight: "bold", color: "var(--base-color-text)" }}
+            >
+              Solicitar busca
+            </Text>
+            <SearchIcon
+              style={{ color: "var(--base-color-white)" }}
+              className="button-search-icon"
+            />
+          </ActionButton>
+        ) : (
+          <CircularProgress size={40} />
+        )}
       </StyledWrapper>
-    </form>
+    </StyledForm>
   );
 };
 
 const StyledInput = styled(Input)`
   padding-left: 27px;
+  font-size: 16px;
 
   @media (max-width: 600px) {
     padding-left: 0;
-    font-size: 1.2rem;
+  }
+`;
+
+const StyledForm = styled.form`
+  width: 50%;
+
+  @media (max-width: 1080px) {
+    width: auto;
   }
 `;
 
 const StyledWrapper = styled(ContainerWrapper)`
-  width: auto;
-  max-width: 768px;
+  width: 100%;
   height: 74px;
   align-items: center;
   border-radius: 50px;

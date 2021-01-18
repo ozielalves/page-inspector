@@ -3,8 +3,9 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Routes from "./routes";
 import { PageWrapper } from "./styles";
+import { observer } from "mobx-react";
 
-function App() {
+const App = observer(() => {
   return (
     <PageWrapper>
       <Navbar />
@@ -12,6 +13,6 @@ function App() {
       <Footer />
     </PageWrapper>
   );
-}
+});
 
 export default App;

@@ -1,12 +1,35 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+export const Title = styled.h1`
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 59px;
+
+  @media (max-width: 600px) {
+    text-align: left;
+    font-size: 1.8rem;
+  }
+`;
+
 export const Text = styled.p`
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
+`;
+
+export const SubTitle = styled(Text)`
+  font-weight: bold;
+  font-size: 26.6967px;
+  line-height: 33px;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const StyledLink = styled(Link)`
@@ -20,11 +43,63 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  .shake {
+    animation: shake 0.5s;
+  }
+
+  @media (max-width: 600px) {
+    height: 100%;
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translate(1px, 1px) rotate(0deg);
+    }
+    10% {
+      transform: translate(-1px, -2px) rotate(-1deg);
+    }
+    20% {
+      transform: translate(-3px, 0px) rotate(1deg);
+    }
+    30% {
+      transform: translate(3px, 2px) rotate(0deg);
+    }
+    40% {
+      transform: translate(1px, -1px) rotate(1deg);
+    }
+    50% {
+      transform: translate(-1px, 2px) rotate(-1deg);
+    }
+    60% {
+      transform: translate(-3px, 1px) rotate(0deg);
+    }
+    70% {
+      transform: translate(3px, 1px) rotate(-1deg);
+    }
+    80% {
+      transform: translate(-1px, -1px) rotate(1deg);
+    }
+    90% {
+      transform: translate(1px, 2px) rotate(0deg);
+    }
+    100% {
+      transform: translate(1px, -2px) rotate(-1deg);
+    }
+  }
 `;
 
 export const ContainerWrapper = styled.div`
   width: 100%;
   height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Wrapper = styled(ContainerWrapper)`
+  width: auto;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,4 +119,27 @@ export const Input = styled.input`
   line-height: 1.75;
   letter-spacing: normal;
   background: transparent;
+`;
+
+export const TableItemContent = styled(ContainerWrapper)`
+  width: auto;
+  min-width: 410px;
+  height: 53px;
+  align-items: center;
+  border-radius: 50px;
+  padding: 9px 72px;
+  box-shadow: var(--base-color-shadow) 0px 4px 10px 0px;
+  justify-content: space-between;
+
+  @media (max-width: 600px) {
+    margin: 0 17px;
+    min-width: 335px;
+  }
+`;
+
+export const TableCell = styled(Wrapper)`
+  width: 80px;
+  justify-content: flex-start;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
