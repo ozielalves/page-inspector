@@ -48,10 +48,6 @@ export const PageWrapper = styled.div`
     animation: shake 0.5s;
   }
 
-  @media (max-width: 600px) {
-    height: 100%;
-  }
-
   @keyframes shake {
     0% {
       transform: translate(1px, 1px) rotate(0deg);
@@ -98,8 +94,8 @@ export const ContainerWrapper = styled.div`
 `;
 
 export const Wrapper = styled(ContainerWrapper)`
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

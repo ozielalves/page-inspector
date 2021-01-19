@@ -49,7 +49,6 @@ const StyledText = styled(Text)`
 const StyledWrapper = styled(Wrapper)`
   flex-direction: column;
   align-items: flex-start;
-  overflow-y: auto;
   position: relative;
   padding: 0 10px 17px 10px;
 

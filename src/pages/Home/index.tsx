@@ -5,7 +5,7 @@ import InspectionRegisterBar from "../../components/InspectionRegisterBar";
 import ActionButton from "../../components/ActionButton";
 import useRequest, { Endpoint } from "../../hooks/useRequest";
 import { observer } from "mobx-react";
-import { requestState, IRequest } from "../../states/RequestState";
+import { requestState } from "../../states/RequestState";
 import useRefresh from "../../hooks/useRefresh";
 import { useHistory } from "react-router-dom";
 import * as request from "../../db/repositories/requests";
@@ -26,11 +26,12 @@ const Home = observer(() => {
 
   const [keyword, setKeyword] = useState("");
   const [emptyFormSubmission, setEmptyFormSubmission] = useState(false);
+  const [formatError, setFormatError] = useState(false);
   const [runCrawlRequest, isRequestLoading] = useRequest();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (keyword !== "") {
+    if (keyword !== "" && keyword.length >= 4) {
       setEmptyFormSubmission(false);
       const response = await runCrawlRequest<request.Request>(postKeyWord, {
         params: {
@@ -45,12 +46,11 @@ const Home = observer(() => {
         requestState.setKeyword(keyword);
         requestState.setId(response.data.id);
 
-        const crawling = await createRequest(response.data.id!);
+        const crawling = await getApiRequestProgress(response.data.id!);
         console.log(crawling);
         // Get id from api
         if (crawling) {
-          request.create({
-            id: response.data.id,
+          request.create(response.data.id, {
             keyword,
             status: crawling.status,
             urls: crawling.urls,
@@ -59,13 +59,15 @@ const Home = observer(() => {
           goToRequests();
         }
       }
+    } else if (keyword.length < 4 && keyword !== "") {
+      setFormatError(true);
     } else {
       setEmptyFormSubmission(true);
       setTimeout(() => setEmptyFormSubmission(false), 500);
     }
   };
 
-  async function createRequest(
+  async function getApiRequestProgress(
     id: string
   ): Promise<request.Request | undefined> {
     const response = await runCrawlRequest<request.Request>(
@@ -101,6 +103,8 @@ const Home = observer(() => {
         keyword={keyword}
         setKeyword={setKeyword}
         isLoading={isRequestLoading}
+        formatError={formatError}
+        setFormatError={setFormatError}
       />
       <StyledLink to="/requests">
         <ActionButton color={"primary"}>

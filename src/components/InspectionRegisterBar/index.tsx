@@ -10,7 +10,9 @@ interface InspectionRegisterProps {
   keyword: string;
   handleSubmit: (e: FormEvent) => void;
   emptySubmission: boolean;
+  formatError: boolean;
   isLoading: boolean;
+  setFormatError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const InspectionRegisterBar = ({
@@ -19,21 +21,32 @@ const InspectionRegisterBar = ({
   handleSubmit,
   emptySubmission,
   isLoading,
+  formatError,
+  setFormatError,
 }: InspectionRegisterProps) => {
+  function handleChange(Event: React.ChangeEvent<HTMLInputElement>) {
+    const { value } = Event.target;
+    if (value.length >= 4) {
+      setFormatError(false);
+    }
+    setKeyword(value);
+  }
+
   return (
     <StyledForm onSubmit={handleSubmit}>
       <StyledWrapper className={emptySubmission ? "shake" : ""}>
         <SearchIcon className="search-icon" />
         <StyledInput
-          /* required */
           id="key"
           type="text"
           name="key"
+          minLength={4}
           placeholder="Digite uma palavra chave"
           autoComplete="off"
           autoCapitalize="off"
           value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
+          onChange={handleChange}
+          onInvalid={() => setFormatError(true)}
         />
         {!isLoading ? (
           <ActionButton color={"secondary"}>
@@ -51,9 +64,30 @@ const InspectionRegisterBar = ({
           <CircularProgress size={40} />
         )}
       </StyledWrapper>
+      {formatError && (
+        <InputError>
+          A palavra chave precisa ter pelo menos 4 caracteres
+        </InputError>
+      )}
     </StyledForm>
   );
 };
+
+export const InputError = styled.div`
+  bottom: 40px;
+  width: 414px;
+  font-size: 16px;
+  line-height: 18px;
+  color: var(--base-color-error);
+  text-align: left;
+  position: absolute;
+  left: 30px;
+
+  @media (max-width: 600px) {
+    bottom: 25px;
+    width: 300px;
+  }
+`;
 
 const StyledInput = styled(Input)`
   padding-left: 27px;
@@ -66,6 +100,7 @@ const StyledInput = styled(Input)`
 
 const StyledForm = styled.form`
   width: 50%;
+  position: relative;
 
   @media (max-width: 1080px) {
     width: auto;

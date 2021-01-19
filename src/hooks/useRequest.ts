@@ -16,7 +16,7 @@ export type useRequestFn = <T = any>(
 export interface RunRequestConfig {
   method?: HTTPMethod;
   params?: any;
-  useParamInline?: boolean;
+  /* useParamInline?: boolean; */
   changeLoadingState?: boolean;
 }
 
@@ -45,7 +45,7 @@ export interface ErrorResponseData {
 }
 
 const DEFAULT_REQUEST_CONFIG: RunRequestConfig = {
-  useParamInline: false,
+  /* useParamInline: false, */
   changeLoadingState: true,
 };
 
@@ -60,9 +60,9 @@ const useRequest = function (): [useRequestFn, boolean] {
         headers: {
           "Content-Type": "application/json",
         },
-        /* paramsSerializer: (params) => {
+        paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "comma" });
-        }, */
+        },
       }),
     []
   );
@@ -107,7 +107,7 @@ const useRequest = function (): [useRequestFn, boolean] {
           url: CORS_HANDLER + parsedEndpoint,
           method: choosenMethod,
           data:
-            config.useParamInline || choosenMethod === "GET"
+            /* config.useParamInline ||  */choosenMethod === "GET"
               ? undefined
               : config.params,
         });

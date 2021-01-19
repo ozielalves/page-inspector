@@ -9,7 +9,7 @@ interface ButtonProps {
 
 const ActionButton = ({ children, color, onClick }: ButtonProps) => {
   return (
-    <ButtonWrapper>
+    <ButtonWrapper className="_button">
       <button
         style={{
           background:
@@ -17,7 +17,7 @@ const ActionButton = ({ children, color, onClick }: ButtonProps) => {
               ? "var(--base-color-deep-orange)"
               : color === "secondary"
               ? "var(--base-color-pinkish-grey)"
-              : "none",
+              : "transparent",
         }}
         onClick={onClick}
       >

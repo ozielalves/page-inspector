@@ -17,23 +17,25 @@ const Table = ({ data, setFilter }: TableProps) => {
         <TableCell>
           <StyledText>Palavra Chave</StyledText>
         </TableCell>
-        <TableCell style={{width: 70, justifyContent: "center"}}>
+        <TableCell style={{ width: 70, justifyContent: "center" }}>
           <StyledText>Status</StyledText>
         </TableCell>
       </TableItemContent>
-      {data ? (
-        data.map(({ id, keyword, status }: Request) => (
-          <TableItem
-            key={id}
-            id={id!}
-            keyword={keyword}
-            status={status}
-            setFiler={setFilter}
-          />
-        ))
-      ) : (
-        <CircularProgress size={300} />
-      )}
+      <RowWrapper>
+        {data ? (
+          data.map(({ id, keyword, status }: Request) => (
+            <TableItem
+              key={id}
+              id={id!}
+              keyword={keyword!}
+              status={status}
+              setFiler={setFilter}
+            />
+          ))
+        ) : (
+          <CircularProgress size={100} />
+        )}
+      </RowWrapper>
     </StyledWrapper>
   );
 };
@@ -48,17 +50,23 @@ const StyledWrapper = styled(Wrapper)`
   flex-direction: column;
   justify-content: flex-start;
   height: 100%;
+  padding: 0 10px;
+`;
+
+const RowWrapper = styled(StyledWrapper)`
+  width: auto;
   overflow-x: hidden;
   overflow-y: auto;
-  position: relative;
-  padding: 0 10px;
+  padding: 0;
+  height: 80%;
+  border-radius: 18px;
 
   &::-webkit-scrollbar {
     width: 4px;
   }
 
   &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
+    box-shadow: inset 0 0 5px transparent;
     border-radius: 10px;
   }
 
@@ -68,11 +76,8 @@ const StyledWrapper = styled(Wrapper)`
   }
 
   @media (max-width: 600px) {
+    /* height: 80%; */
     padding: 0;
-  }
-
-  @media (max-width: 600px) {
-    height: 220px;
   }
 `;
 

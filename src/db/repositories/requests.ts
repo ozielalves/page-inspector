@@ -7,7 +7,7 @@ const COLLECTION_NAME = "requests";
 // mapping the request document
 export type Request = {
   id?: string;
-  keyword: string;
+  keyword?: string;
   status: string;
   urls: string[];
 };
@@ -36,17 +36,21 @@ export const get = async (): Promise<Array<Request> | undefined> => {
 };
 
 // create a request
-export const create = async (request: Request): Promise<Request | undefined> => {
-  const docRef = await db
+export const create = async (
+  id: string,
+  request: Request
+): Promise<Request | undefined> => {
+  await db
     .collection(COLLECTION_NAME)
-    .add(request)
+    .doc(id)
+    .set(request)
     .catch((error) => {
       console.log(`Error creating the document on ${COLLECTION_NAME}`, error);
     });
-  if (docRef) {
-    // return new created request
+  if (db) {
+    // return created request
     return {
-      id: docRef.id,
+      id: id,
       ...request,
     } as Request;
   }

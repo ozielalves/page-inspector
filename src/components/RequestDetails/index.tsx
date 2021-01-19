@@ -107,12 +107,14 @@ const StyledWrapper = styled(Wrapper)`
   flex-direction: column;
   justify-content: flex-start;
   height: 100%;
+  width: 50%;
   box-shadow: var(--base-color-shadow) 0px 4px 10px 0px;
   border-radius: 50px;
   padding: 37px 65px;
   margin: 0 60px;
 
   @media (max-width: 1080px) {
+    width: 100%;
     margin: 17px 0;
   }
 `;
