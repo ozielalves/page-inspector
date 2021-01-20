@@ -1,60 +1,81 @@
 import React from "react";
 import styled from "styled-components";
-import { TableItemContent, Text, Wrapper, TableCell } from "../../../styles";
+import { TableItemContent, Text, TableCell } from "../../../styles";
+import ActionButton from "../../ActionButton";
+import CircularProgress from "../../CircularProgress";
+import { ReactComponent as TrashIcon } from "../../../assets/trash-icon.svg";
 
 interface TableItemProps {
   id: string;
   keyword: string;
   status: string;
-  setFiler: React.Dispatch<React.SetStateAction<string>>;
+  setFilter: React.Dispatch<React.SetStateAction<string>>;
+  handleDelete: (id: string) => void;
 }
 
-const Table = ({ keyword, status, setFiler, id }: TableItemProps) => {
+const Table = ({ keyword, status, setFilter, id, handleDelete }: TableItemProps) => {
   return (
-    <StyledWrapper onClick={() => setFiler(id)}>
-      <ClickableTableItem
-        style={{
-          backgroundColor:
-            status === "done"
-              ? "var(--base-color-green)"
-              : "var(--base-color-deep-orange)",
-        }}
-      >
-        <TableCell>
-          <StyledText>{keyword}</StyledText>
-        </TableCell>
-        <TableCell style={{ width: 70, justifyContent: "center" }}>
-          <StyledText>{status}</StyledText>
-        </TableCell>
-      </ClickableTableItem>
-    </StyledWrapper>
+    <ClickableTableItem
+      style={{
+        backgroundColor:
+          status === "done"
+            ? "var(--base-color-green)"
+            : "var(--base-color-deep-orange)",
+      }}
+      onClick={() => setFilter(id)}
+    >
+      <div></div>
+      <TableCell>
+        <StyledText>{keyword}</StyledText>
+      </TableCell>
+      <TableCell style={{ justifyContent: "flex-end" }}>
+        {status === "done" ? (
+          <>
+            <StyledText>{status}</StyledText>
+            <ActionButton
+              color="error"
+              onClick={(e:any) => {
+                e.stopPropagation();
+                handleDelete(id);
+              }}
+              style={{ width: "30%" }}
+            >
+              <TrashIcon />
+            </ActionButton>
+          </>
+        ) : (
+          <CircularProgress size={30} color={"white"} />
+        )}
+      </TableCell>
+    </ClickableTableItem>
   );
 };
 
 const ClickableTableItem = styled(TableItemContent)`
   cursor: pointer;
   transition: opacity 0.5s ease;
+  margin: 5px;
+  padding: 9px 0 9px 72px;
+
+  button {
+    padding: 0;
+    height: 40px;
+    width: 40px;
+  }
 
   &:hover {
     opacity: 0.7;
   }
+
+  @media (max-width: 600px) {
+    padding: 9px 4px 9px 36px;
+  }
 `;
 
 const StyledText = styled(Text)`
-  font-weight: bold;
+  font-weight: normal;
   font-size: 18px;
   color: var(--base-color-white);
-`;
-
-const StyledWrapper = styled(Wrapper)`
-  flex-direction: column;
-  align-items: flex-start;
-  position: relative;
-  padding: 0 10px 17px 10px;
-
-  @media (max-width: 600px) {
-    padding: 0 0 17px 0;
-  }
 `;
 
 export default Table;

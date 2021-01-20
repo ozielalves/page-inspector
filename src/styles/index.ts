@@ -93,12 +93,19 @@ export const ContainerWrapper = styled.div`
   align-items: center;
 `;
 
-export const Wrapper = styled(ContainerWrapper)`
+export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const WrapperColumn = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Input = styled.input`
@@ -118,7 +125,7 @@ export const Input = styled.input`
 `;
 
 export const TableItemContent = styled(ContainerWrapper)`
-  width: auto;
+  width: 100%;
   min-width: 410px;
   height: 53px;
   align-items: center;
@@ -130,12 +137,19 @@ export const TableItemContent = styled(ContainerWrapper)`
   @media (max-width: 600px) {
     margin: 0 17px;
     min-width: 335px;
+    padding: 9px 36px;
   }
 `;
 
 export const TableCell = styled(Wrapper)`
-  width: 80px;
+  max-width: 80%;
+  min-width: 20%;
   justify-content: flex-start;
-  text-overflow: ellipsis;
-  overflow: hidden;
+
+  p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 20px;
+  }
 `;

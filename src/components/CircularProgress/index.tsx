@@ -3,10 +3,27 @@ import styled from "styled-components";
 
 interface CircularProgressProps {
   size?: number;
+  color?: "orange" | "white" | "grey";
 }
 
-const CircularProgress = ({ size }: CircularProgressProps) => {
-  return <Progress style={{ width: size ? size : 48, height: size ? size : 48 }} />;
+const CircularProgress = ({ size, color }: CircularProgressProps) => {
+  return (
+    <Progress
+      style={{
+        width: size ? size : 48,
+        height: size ? size : 48,
+        color: color
+          ? color === "orange"
+            ? "var(--base-color-deep-orange)"
+            : color === "white"
+            ? "var(--base-color-white)"
+            : color === "grey"
+            ? "var(--base-color-grey)"
+            : "var(--base-color-deep-orange)"
+          : "var(--base-color-deep-orange)",
+      }}
+    />
+  );
 };
 
 const Progress = styled.progress`
@@ -19,7 +36,7 @@ const Progress = styled.progress`
   padding: 0.25em;
   width: 3em;
   height: 3em;
-  color: var(--base-color-deep-orange);
+  /* color: var(--base-color-deep-orange); */
   background-color: transparent;
   font-size: 16px;
   overflow: hidden;

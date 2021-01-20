@@ -40,13 +40,13 @@ const InspectionRegisterBar = ({
           id="key"
           type="text"
           name="key"
-          minLength={4}
+          /* minLength={4} */
           placeholder="Digite uma palavra chave"
           autoComplete="off"
           autoCapitalize="off"
           value={keyword}
           onChange={handleChange}
-          onInvalid={() => setFormatError(true)}
+          /* onInvalid={() => setFormatError(true)} */
         />
         {!isLoading ? (
           <ActionButton color={"secondary"}>

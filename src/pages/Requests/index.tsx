@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import { StyledLink, Text, WrapperColumn } from "../../styles";
 import {
-  PageWrapper,
-  StyledLink,
-  Text,
-  Wrapper,
-  Title,
-  SubTitle,
-} from "../../styles";
+  Content,
+  Details,
+  DetailsText,
+  HeaderTitle,
+  PageContent,
+  PageHeader,
+  RefreshWrapper,
+  Url,
+  UrlBox,
+} from "./styles";
 import ActionButton from "../../components/ActionButton";
-import RequestDetails from "../../components/RequestDetails";
 import Table from "../../components/Table";
 import { observer } from "mobx-react";
 import { requestState } from "../../states/RequestState";
@@ -24,43 +26,47 @@ const getCrawlingResults: Endpoint = {
   service: "crawl",
 };
 
+interface ApiRequestResponse {
+  id: string;
+  status: string;
+  urls: string[];
+}
+
 const Requests = observer(() => {
   const [requests, setRequests] = useState<request.Request[]>();
   const [refreshFlag, setRefreshFlag] = useState(true);
-  const [runCrawlRequest, isRequestLoading] = useRequest();
-  const [loading, setLoading] = useState(false);
-  const [fetchError, setFetchError] = useState(false);
+  const [runCrawlRequest] = useRequest();
   const [filter, setFilter] = useState("");
   const [selectedRequest, setSelectedRequest] = useState<request.Request>();
   const [lastRefresh, setLastRefresh] = useState(0);
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
+    setRequests([]);
     fetchRequests();
   }, []);
 
   useEffect(() => {
     async function updateRequestsList() {
-      if (requests) {
-        requests.forEach((req: request.Request) => {
-          updateRequestProgress(req.id!);
+      const _requests = await request.get();
+      if (_requests) {
+        _requests.forEach((req: request.Request) => {
+          updateRequestProgress(req.id!, req.apiId);
         });
         fetchRequests();
       }
     }
-    async function updateRequestProgress(id: string) {
-      const requestProgress = await getApiRequestProgress(id);
+    async function updateRequestProgress(idRequest: string, apiId: string) {
+      const requestProgress = await getApiRequestProgress(apiId);
       if (requestProgress) {
-        const { status, urls } = requestProgress;
-        console.log("Request Progress", requestProgress); //PRINT
-        request.update(id, { status, urls });
+        const { id, status, urls } = requestProgress;
+        request.update(idRequest, { apiId: id, status, urls });
       }
     }
-
     async function getApiRequestProgress(
       id: string
-    ): Promise<request.Request | undefined> {
-      const response = await runCrawlRequest<request.Request>(
+    ): Promise<ApiRequestResponse | undefined> {
+      const response = await runCrawlRequest<ApiRequestResponse>(
         getCrawlingResults,
         {
           params: {
@@ -77,6 +83,7 @@ const Requests = observer(() => {
       }
     }
 
+    setRequests([]);
     updateRequestsList();
     setRefreshFlag(false);
     setLastRefresh(0);
@@ -91,20 +98,19 @@ const Requests = observer(() => {
 
   useEffect(() => {
     if (requests) {
-      if (requestState.id) {
-        const [currentRequest] = requests?.filter(
-          ({ id }: request.Request) => requestState.id === id
+      if (requestState.apiId) {
+        const [lastRequest] = requests.filter(
+          ({ apiId }: request.Request) => apiId === requestState.apiId
         );
-        setSelectedRequest(currentRequest);
-      } else {
-        const [firstRequest] = requests.slice(0, 1);
-        setSelectedRequest(firstRequest);
+        setSelectedRequest(lastRequest);
+        setOpenModal(true);
       }
     }
   }, [requests]);
 
   useEffect(() => {
     if (requests && filter !== "") {
+      setFilter("");
       const [currentRequest] = requests.filter(
         ({ id }: request.Request) => filter === id
       );
@@ -118,46 +124,65 @@ const Requests = observer(() => {
     }
   }, [filter, requests]);
 
+  const handleDelete = (id: string) => {
+    request.remove(id);
+    setRefreshFlag(true);
+  };
+
   async function fetchRequests() {
-    setLoading(true);
-
-    // Clean the requests array first
-    setRequests([]);
-
     // Fetch requests from repository
     const _requests = await request.get();
 
     if (_requests) {
       // Set requests to state
       setRequests(_requests);
-      setFetchError(false);
-      setLoading(false);
-    } else {
-      setFetchError(true);
-      setLoading(false);
     }
   }
 
   return (
     <PageContent>
       <Modal
-        title={"Urls Encontrados"}
+        title={`${
+          selectedRequest ? selectedRequest.urls.length : 0
+        } urls encontrados`}
         open={openModal}
         onClose={() => setOpenModal(false)}
       >
         {selectedRequest ? (
           <Content>
             <Details>
-              <DetailsText>
-                Palavra Chave:
-                <Text style={{ marginLeft: 9 }}>
-                  {selectedRequest?.keyword}
-                </Text>
-              </DetailsText>
-              <DetailsText>
-                Status:{" "}
-                <Text style={{ marginLeft: 9 }}>{selectedRequest?.status}</Text>
-              </DetailsText>
+              <ActionButton
+                className={
+                  selectedRequest.status === "active" ? "button-rotate" : ""
+                }
+                color={"secondary"}
+                onClick={() => {
+                  setRefreshFlag(true);
+                }}
+                style={{ width: "30%" }}
+              >
+                <RefreshIcon />
+              </ActionButton>
+              <WrapperColumn>
+                <DetailsText>
+                  Palavra Chave:
+                  <Text
+                    style={{
+                      marginLeft: 9,
+                      maxWidth: "75%",
+                      overflowWrap: "anywhere",
+                    }}
+                  >
+                    {selectedRequest?.keyword}
+                  </Text>
+                </DetailsText>
+                <DetailsText style={{ marginTop: 16 }}>
+                  Status:{" "}
+                  <Text style={{ marginLeft: 9 }}>
+                    {selectedRequest?.status}
+                  </Text>
+                </DetailsText>
+              </WrapperColumn>
             </Details>
             <UrlBox>
               {selectedRequest.urls.map((url, index) => (
@@ -171,8 +196,7 @@ const Requests = observer(() => {
           <CircularProgress size={100} />
         )}
       </Modal>
-      {/* <StyledWrapper> */}
-      <Wrapper style={{ justifyContent: "space-between" }}>
+      <PageHeader>
         <StyledLink to="/">
           <ReturnIcon style={{ marginTop: 10 }} />
         </StyledLink>
@@ -185,144 +209,18 @@ const Requests = observer(() => {
               setRefreshFlag(true);
             }}
           >
-            <Text style={{ color: "var(--base-color-text)" }}>Refresh</Text>
+            <Text style={{ color: "var(--base-color-text)" }}>Recarregar</Text>
             <RefreshIcon />
           </ActionButton>
         </RefreshWrapper>
-      </Wrapper>
-      <RequestsWrapper>
-        <Table data={requests} setFilter={setFilter} />
-      </RequestsWrapper>
-      {/* </StyledWrapper> */}
+      </PageHeader>
+      <Table
+        data={requests}
+        setFilter={setFilter}
+        handleDelete={handleDelete}
+      />
     </PageContent>
   );
 });
-
-const HeaderTitle = styled(Title)`
-  margin: 0 17px;
-
-  @media (max-width: 850px) {
-    font-size: 1.8rem;
-  }
-`;
-
-const RefreshWrapper = styled(Wrapper)`
-  justify-content: flex-end;
-  padding-left: 20px;
-
-  div > button {
-    transition: display 1s ease;
-    margin-left: 17px;
-    padding: 10px 20px;
-    
-    > p {
-      font-weight: "bold",
-      color: var(--base-color-white);
-      margin-right: 24px;
-      display: none;
-    }
-
-    :hover {
-      > p {
-        display: flex;
-      }
-    }
-  }
-  
-  @media (max-width: 600px) {
-    p {
-      display: none;
-    }
-    div > button {  
-      :hover {
-        > p {
-          display: none;
-        }
-      }
-  }
-`;
-
-const RequestsWrapper = styled(Wrapper)`
-  height: 100%;
-  width: 50%;
-  justify-content: flex-start;
-  flex-direction: column;
-  }
-
-  @media (max-width: 1080px) {
-    width: 100%;
-  }
-`;
-
-const StyledWrapper = styled(Wrapper)`
-  width: 100%;
-  margin-top: 57px;
-
-  @media (max-width: 1080px) {
-    flex-direction: column;
-  }
-`;
-
-const PageContent = styled(PageWrapper)`
-  height: 100%;
-  justify-content: flex-start;
-  padding: 0 117px;
-  margin-top: 36px;
-  /* align-items: flex-start; */
-
-  @media (max-width: 1080px) {
-    padding: 0 20px;
-  }
-`;
-
-const DetailsText = styled.div`
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 20px;
-  display: flex;
-`;
-
-const Details = styled.div`
-  width: 100%;
-  /* flex-direction: column;
-  align-items: flex-start; */
-  margin: 27px 0;
-`;
-
-const UrlBox = styled.div`
-  width: 100%;
-  height: 65%;
-  display: grid;
-  overflow-y: auto;
-  overflow-wrap: anywhere;
-
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px transparent;
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #8c8c8c;
-    border-radius: 10px;
-  }
-`;
-
-const Url = styled.a`
-  margin-top: 15px;
-`;
-
-const Content = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
 
 export default Requests;

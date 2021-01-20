@@ -1,20 +1,20 @@
 import { observable, action } from 'mobx';
 
 export interface IRequest {
-  id: string;
+  apiId: string;
   keyword: string;
 }
 
 class RequestState {
-  @observable id: string = "";
+  @observable apiId: string = "";
 
   @observable keyword: string = "";
 
   @action setKeyword = (value: string) => {
     this.keyword = value;
   };
-  @action setId = (value: string) => {
-    this.keyword = value;
+  @action setApiId = (value: string) => {
+    this.apiId = value;
   };
 }
 

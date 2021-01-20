@@ -8,19 +8,25 @@ import CircularProgress from "../CircularProgress";
 interface TableProps {
   data?: Request[];
   setFilter: React.Dispatch<React.SetStateAction<string>>;
+  handleDelete: (id: string) => void;
 }
 
-const Table = ({ data, setFilter }: TableProps) => {
+const Table = ({ data, setFilter, handleDelete }: TableProps) => {
   return (
     <StyledWrapper>
-      <TableItemContent style={{ margin: "10px 0 17px 0" }}>
+      <StyledTableItem>
         <TableCell>
-          <StyledText>Palavra Chave</StyledText>
+          <StyledText style={{ whiteSpace: "normal" }}>
+            Palavra Chave
+          </StyledText>
         </TableCell>
-        <TableCell style={{ width: 70, justifyContent: "center" }}>
+        {/* <div> */}
+        <TableCell style={{ justifyContent: "flex-end" }}>
           <StyledText>Status</StyledText>
         </TableCell>
-      </TableItemContent>
+        <FakeCell />
+        {/* </div> */}
+      </StyledTableItem>
       <RowWrapper>
         {data ? (
           data.map(({ id, keyword, status }: Request) => (
@@ -29,16 +35,34 @@ const Table = ({ data, setFilter }: TableProps) => {
               id={id!}
               keyword={keyword!}
               status={status}
-              setFiler={setFilter}
+              setFilter={setFilter}
+              handleDelete={handleDelete}
             />
           ))
         ) : (
-          <CircularProgress size={100} />
+          <CircularProgress size={100} color="grey" />
         )}
       </RowWrapper>
     </StyledWrapper>
   );
 };
+
+const FakeCell = styled.div`
+  width: 1px;
+  margin: 20px;
+
+  @media (max-width: 600px) {
+    margin: 10px;
+  }
+`;
+
+const StyledTableItem = styled(TableItemContent)`
+  margin: 10px 40px 17px 40px;
+
+  @media (max-width: 600px) {
+    margin: 10px 36px;
+  }
+`;
 
 const StyledText = styled(Text)`
   font-weight: bold;
@@ -49,17 +73,24 @@ const StyledText = styled(Text)`
 const StyledWrapper = styled(Wrapper)`
   flex-direction: column;
   justify-content: flex-start;
-  height: 100%;
+  height: 90%;
+  width: 75%;
   padding: 0 10px;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    padding: 0;
+  }
 `;
 
 const RowWrapper = styled(StyledWrapper)`
-  width: auto;
+  width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   padding: 0;
-  height: 80%;
-  border-radius: 18px;
+  height: 100%;
+  border-radius: 25px;
+  padding-right: 20px;
 
   &::-webkit-scrollbar {
     width: 4px;
@@ -75,9 +106,9 @@ const RowWrapper = styled(StyledWrapper)`
     border-radius: 10px;
   }
 
-  @media (max-width: 600px) {
-    /* height: 80%; */
+  @media (max-width: 1024px) {
     padding: 0;
+    padding-right: 10px;
   }
 `;
 

@@ -25,14 +25,14 @@ const Home = observer(() => {
   const goToRequests = useRefresh(history, redirectPath);
 
   const [keyword, setKeyword] = useState("");
-  const [emptyFormSubmission, setEmptyFormSubmission] = useState(false);
+  const [shakeForm, setShakeForm] = useState(false);
   const [formatError, setFormatError] = useState(false);
   const [runCrawlRequest, isRequestLoading] = useRequest();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (keyword !== "" && keyword.length >= 4) {
-      setEmptyFormSubmission(false);
+      setShakeForm(false);
       const response = await runCrawlRequest<request.Request>(postKeyWord, {
         params: {
           keyword,
@@ -44,13 +44,13 @@ const Home = observer(() => {
       }
       if (response.data?.id) {
         requestState.setKeyword(keyword);
-        requestState.setId(response.data.id);
+        requestState.setApiId(response.data.id);
 
         const crawling = await getApiRequestProgress(response.data.id!);
-        console.log(crawling);
         // Get id from api
         if (crawling) {
-          request.create(response.data.id, {
+          request.create({
+            apiId: response.data.id,
             keyword,
             status: crawling.status,
             urls: crawling.urls,
@@ -61,9 +61,11 @@ const Home = observer(() => {
       }
     } else if (keyword.length < 4 && keyword !== "") {
       setFormatError(true);
+      setShakeForm(true);
+      setTimeout(() => setShakeForm(false), 500);
     } else {
-      setEmptyFormSubmission(true);
-      setTimeout(() => setEmptyFormSubmission(false), 500);
+      setShakeForm(true);
+      setTimeout(() => setShakeForm(false), 500);
     }
   };
 
@@ -99,7 +101,7 @@ const Home = observer(() => {
       </TextContainer>
       <InspectionRegisterBar
         handleSubmit={handleSubmit}
-        emptySubmission={emptyFormSubmission}
+        emptySubmission={shakeForm}
         keyword={keyword}
         setKeyword={setKeyword}
         isLoading={isRequestLoading}

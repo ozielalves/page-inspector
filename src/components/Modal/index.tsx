@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import styled from "styled-components";
-import { SubTitle, Text, Wrapper } from "../../styles";
-import CircularProgress from "../CircularProgress";
+import { SubTitle } from "../../styles";
 import { ReactComponent as CloseIcon } from "../../assets/close-icon.svg";
 import ActionButton from "../ActionButton";
 
@@ -35,6 +34,7 @@ const RequestDetails = ({
             onClick={() => {
               onClose();
             }}
+            style={{ position: "absolute", right: 0 }}
           >
             <CloseIcon />
           </ActionButton>
@@ -87,16 +87,12 @@ const ModalWrapper = styled.div`
   align-items: center;
   height: 70%;
   min-height: 200px;
-  width: 60%;
+  width: 650px;
+  max-height: 680px;
   background-color: var(--base-color-white);
   box-shadow: var(--base-color-shadow) 0px 4px 10px 0px;
   border-radius: 50px;
   padding: 37px 65px;
-
-  ._button {
-    position: absolute;
-    right: 0;
-  }
 
   button {
     padding: 0;
@@ -104,7 +100,7 @@ const ModalWrapper = styled.div`
     width: 40px;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 780px) {
     width: 80%;
     padding: 30px;
     max-height: 60%;

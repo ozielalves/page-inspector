@@ -1,15 +1,17 @@
 import React, { ReactNode } from "react";
-import styled from "styled-components";
+import styled, { CSSProperties } from "styled-components";
 
 interface ButtonProps {
   children?: ReactNode;
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | "error";
   onClick?: any;
+  style?: CSSProperties;
+  className?: string;
 }
 
-const ActionButton = ({ children, color, onClick }: ButtonProps) => {
+const ActionButton = ({ children, color, onClick, style, className }: ButtonProps) => {
   return (
-    <ButtonWrapper className="_button">
+    <ButtonWrapper className={className} style={style}>
       <button
         style={{
           background:
@@ -17,6 +19,8 @@ const ActionButton = ({ children, color, onClick }: ButtonProps) => {
               ? "var(--base-color-deep-orange)"
               : color === "secondary"
               ? "var(--base-color-pinkish-grey)"
+              : color === "error"
+              ? "var(--base-color-error)"
               : "transparent",
         }}
         onClick={onClick}

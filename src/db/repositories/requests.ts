@@ -7,6 +7,7 @@ const COLLECTION_NAME = "requests";
 // mapping the request document
 export type Request = {
   id?: string;
+  apiId: string;
   keyword?: string;
   status: string;
   urls: string[];
@@ -25,8 +26,8 @@ export const get = async (): Promise<Array<Request> | undefined> => {
   if (snapshot) {
     snapshot.docs.map((_data) =>
       data.push({
-        id: _data.id, // because id field in separate function in firestore
-        ..._data.data(), // the remaining fields
+        id: _data.id, 
+        ..._data.data(), 
       })
     );
 
@@ -37,20 +38,18 @@ export const get = async (): Promise<Array<Request> | undefined> => {
 
 // create a request
 export const create = async (
-  id: string,
   request: Request
 ): Promise<Request | undefined> => {
-  await db
+  const docRef = await db
     .collection(COLLECTION_NAME)
-    .doc(id)
-    .set(request)
+    .add(request)
     .catch((error) => {
       console.log(`Error creating the document on ${COLLECTION_NAME}`, error);
     });
-  if (db) {
+  if (docRef) {
     // return created request
     return {
-      id: id,
+      id: docRef.id,
       ...request,
     } as Request;
   }
