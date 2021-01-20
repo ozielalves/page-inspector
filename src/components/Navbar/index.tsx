@@ -12,7 +12,7 @@ const Navbar = () => {
         <OzielLogo />
         <LogoText style={{ marginLeft: 24 }}>pageinspector</LogoText>
       </Wrapper>
-      <Wrapper /* style={{marginTop: 5}} */>
+      <IconsWrapper>
         <a
           style={{ textDecoration: "none", margin: "5px 0 0 24px" }}
           href="https://www.linkedin.com/in/ozielalves/"
@@ -27,10 +27,16 @@ const Navbar = () => {
         >
           <GithubIcon />
         </a>
-      </Wrapper>
+      </IconsWrapper>
     </StyledWrapper>
   );
 };
+
+const IconsWrapper = styled(Wrapper)`
+  @media (max-width: 320px) {
+    display: none;
+  }
+`;
 
 const StyledWrapper = styled(ContainerWrapper)`
   height: 73px;

@@ -8,6 +8,9 @@ export const HeaderTitle = styled(Title)`
   @media (max-width: 850px) {
     font-size: 1.8rem;
   }
+  @media(max-width: 300px) {
+    margin: 0;
+  }
 `;
 
 export const PageHeader = styled.div`

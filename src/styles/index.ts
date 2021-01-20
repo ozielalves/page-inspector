@@ -34,6 +34,10 @@ export const SubTitle = styled(Text)`
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
+
+  @media(max-width: 320px) {
+    display: none;
+  }
 `;
 
 export const PageWrapper = styled.div`
@@ -136,7 +140,7 @@ export const TableItemContent = styled(ContainerWrapper)`
 
   @media (max-width: 600px) {
     margin: 0 17px;
-    min-width: 335px;
+    min-width: 250px;
     padding: 9px 36px;
   }
 `;

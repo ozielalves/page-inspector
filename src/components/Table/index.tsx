@@ -81,6 +81,12 @@ const StyledWrapper = styled(Wrapper)`
     width: 100%;
     padding: 0;
   }
+  @media (max-width: 300px) {
+    height: 85%;
+  }
+  @media (max-height: 640px) {
+    height: 85%;
+  }
 `;
 
 const RowWrapper = styled(StyledWrapper)`
