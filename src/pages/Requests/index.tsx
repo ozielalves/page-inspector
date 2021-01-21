@@ -14,7 +14,7 @@ import {
 import ActionButton from "../../components/ActionButton";
 import Table from "../../components/Table";
 import { observer } from "mobx-react";
-import { requestState } from "../../states/RequestState";
+import { lastRequestState } from "../../states/LastRequestState";
 import * as request from "../../db/repositories/requests";
 import { ReactComponent as ReturnIcon } from "../../assets/return-icon.svg";
 import { ReactComponent as RefreshIcon } from "../../assets/refresh-icon.svg";
@@ -51,7 +51,9 @@ const RequestsPage = observer(() => {
       const _requests = await request.get();
       if (_requests) {
         _requests.forEach((req: request.Request) => {
-          updateRequestProgress(req.id!, req.apiId);
+          if (req.status !== "done") {
+            updateRequestProgress(req.id!, req.apiId);
+          }
         });
         fetchRequests();
       }
@@ -98,9 +100,9 @@ const RequestsPage = observer(() => {
 
   useEffect(() => {
     if (requests) {
-      if (requestState.apiId) {
+      if (lastRequestState.apiId) {
         const [lastRequest] = requests.filter(
-          ({ apiId }: request.Request) => apiId === requestState.apiId
+          ({ apiId }: request.Request) => apiId === lastRequestState.apiId
         );
         setSelectedRequest(lastRequest);
         setOpenModal(true);
@@ -142,9 +144,11 @@ const RequestsPage = observer(() => {
   return (
     <PageContent>
       <Modal
-        title={`${
-          selectedRequest ? selectedRequest.urls.length : 0
-        } urls encontrados`}
+        title={`${selectedRequest ? selectedRequest.urls.length : 0} ${
+          selectedRequest?.urls.length !== 1
+            ? "urls encontrados"
+            : "url encontrado"
+        }`}
         open={openModal}
         onClose={() => setOpenModal(false)}
       >
@@ -202,10 +206,14 @@ const RequestsPage = observer(() => {
         </StyledLink>
         <HeaderTitle>Requisições</HeaderTitle>
         <RefreshWrapper>
-          <Text>Última atualização à {lastRefresh} min</Text>
+          <Text style={{ marginRight: 17 }}>
+            Última atualização à {lastRefresh} min
+          </Text>
           <ActionButton
             color={"secondary"}
             onClick={() => {
+              lastRequestState.setApiId("");
+              lastRequestState.setKeyword("");
               setRefreshFlag(true);
             }}
           >

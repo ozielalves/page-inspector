@@ -1,46 +1,168 @@
-# Getting Started with Create React App
+<img src="src\assets\logo-navbar.svg" alt="logo" align="right">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Page Inspector &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-## Available Scripts
+> A web page inspection application
 
-In the project directory, you can run:
+This project aims to provide the user with a simplified interface for automating search for keywords (character strings) on websites, using REST APIs from a web crawling service.
 
-### `yarn start`
+The page allows the user to enter a keyword, with more than 3 characters, to be submitted to the crawling service.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+After submitting, the API returns an ID for the submitted keyword that will be used to track the keyword crawling progress.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The project was developed using [React JS](https://pt-br.reactjs.org/) and deployed using [Firebase](https://firebase.google.com/). Besides React and Firebase, other technologies were employed, such as: [TypeScript](https://www.typescriptlang.org/), [Styled Components](https://styled-components.com/), [Jest](https://jestjs.io/) and [Enzyme](https://airbnb.io/projects/enzyme/) with an [unofficial adapter for React 17](https://www.npmjs.com/package/@wojtekmaj/enzyme-adapter-react-17).
 
-### `yarn test`
+Link to demo: **[Page Inspector](https://page-inspector.web.app)**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br>
 
-### `yarn build`
+## Getting started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Cloning the repository:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+# Clone the repository
+git clone git@github.com:ozielalves/page-inspector.git
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Go to repository root
+cd page-inspector/
+```
 
-### `yarn eject`
+Runs the application on localhost: 3000.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<br>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Setting up Development
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Installing the necessary dependencies:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+yarn install
+```
 
-## Learn More
+Running the application:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+yarn start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The following message will appear:
+
+```bash
+Compiled successfully!
+
+You can now view page-inspector in the browser.
+
+  Local:            http://localhost:3000
+  On Your Network:  http://192.168.1.2:3000
+
+Note that the development build is not optimized.
+To create a production build, use yarn build.
+```
+
+If the development environment does not open automatically in your default browser, you can access it by typing the local environment, which was provided in the previous message, in your browser's navigation bar:
+
+```bash
+http://localhost:3000
+```
+
+<br>
+
+### Deploying
+
+After completing the development process, it is possible to deploy the application using any hosting service available. This project was deployed using Firebase.
+
+Inatalling Firebase:
+
+```bash
+npm install -g firebase-tools
+```
+
+Login into your firebase account using a google account.
+
+```bash
+firebase login
+```
+
+Deploy:
+
+```bash
+firebase deploy --only hosting -m "Deploying the most stable version"
+```
+
+For more information see documentation
+
+- [Firebase CLI](https://firebase.google.com/docs/cli?hl=pt-br#windows-npm)
+- [Firebase Host](https://firebase.google.com/docs/hosting/quickstart)
+
+## Development
+
+### Built With
+
+- React (17.0.1)
+- Styled Components (5.2.1)
+- Typescript (4.0.3)
+
+### Tested With
+
+- TS-Jest (26.4.1)
+- Enzyme (3.11.0)
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/)
+- [React](https://pt-br.reactjs.org/)
+
+### Folder Structure
+
+```bash
+page-inspector
+├───build
+├───node_modules
+├───public
+└───src
+    └───src
+        ├───assets
+        ├───components
+        │   ├───ActionButton
+        │   ├───CircularProgress
+        │   ├───Footer
+        │   ├───KeywordForm
+        │   ├───Modal
+        │   │   └───__tests__
+        │   ├───Navbar
+        │   └───Table
+        │       ├───TableItem
+        │       └───__tests__
+        ├───db
+        │   └───repositories
+        ├───hooks
+        ├───pages
+        │   ├───Home
+        │   └───Requests
+        │       └───styles
+        ├───routes
+        ├───states
+        │   └───__tests__
+        └───styles
+```
+
+## Tests
+
+### Setup
+
+> Adapter (setupTests.ts)
+
+```bash
+import { configure } from "enzyme";
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
+import "@testing-library/jest-dom/extend-expect";
+
+configure({ adapter: new Adapter() });
+```
+
+### Running tests
+
+```bash
+$ yarn test
+```

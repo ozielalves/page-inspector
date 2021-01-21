@@ -1,40 +1,107 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import styled from "styled-components";
+import useRequest, { Endpoint } from "../../hooks/useRequest";
+import { observer } from "mobx-react";
+import { lastRequestState } from "../../states/LastRequestState";
+import useRefresh from "../../hooks/useRefresh";
+import { useHistory } from "react-router-dom";
+import * as request from "../../db/repositories/requests";
 import { ReactComponent as SearchIcon } from "../../assets/search-icon.svg";
 import { ContainerWrapper, Input, Text } from "../../styles";
 import ActionButton from "../ActionButton";
 import CircularProgress from "../CircularProgress";
 
-interface InspectionRegisterProps {
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
-  keyword: string;
-  handleSubmit: (e: FormEvent) => void;
-  emptySubmission: boolean;
-  formatError: boolean;
-  isLoading: boolean;
-  setFormatError: React.Dispatch<React.SetStateAction<boolean>>;
-}
+const postKeyWord: Endpoint = {
+  service: "crawl",
+  method: "POST",
+};
 
-const KeywordForm = ({
-  keyword,
-  setKeyword,
-  handleSubmit,
-  emptySubmission,
-  isLoading,
-  formatError,
-  setFormatError,
-}: InspectionRegisterProps) => {
+const getCrawlingResults: Endpoint = {
+  service: "crawl",
+};
+
+const KeywordForm = observer(() => {
+  const history = useHistory();
+  const redirectPath = "/requests";
+  const goToRequests = useRefresh(history, redirectPath);
+
+  const [keyword, setKeyword] = useState("");
+  const [shakeForm, setShakeForm] = useState(false);
+  const [formatError, setFormatError] = useState(false);
+  const [runCrawlRequest, isRequestLoading] = useRequest();
+
+  function validateKeywordInput(value: string) {
+    return value.length > 3 && value.length < 33 && value !== "";
+  }
+
   function handleChange(Event: React.ChangeEvent<HTMLInputElement>) {
     const { value } = Event.target;
-    if (value.length >= 4) {
+    if (validateKeywordInput(value)) {
       setFormatError(false);
     }
     setKeyword(value);
   }
 
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (validateKeywordInput(keyword)) {
+      setShakeForm(false);
+      const response = await runCrawlRequest<request.Request>(postKeyWord, {
+        params: {
+          keyword,
+        },
+      });
+      if (response.error) {
+        console.log(response.error);
+        return;
+      }
+      if (response.data?.id) {
+        lastRequestState.setKeyword(keyword);
+        lastRequestState.setApiId(response.data.id);
+
+        const crawling = await getApiRequestProgress(response.data.id!);
+        // Get id from api
+        if (crawling) {
+          request.create({
+            apiId: response.data.id,
+            keyword,
+            status: crawling.status,
+            urls: crawling.urls,
+          });
+          setKeyword("");
+          goToRequests();
+        }
+      }
+    } else {
+      setFormatError(true);
+      setShakeForm(true);
+      setTimeout(() => setShakeForm(false), 500);
+    }
+  };
+
+  async function getApiRequestProgress(
+    id: string
+  ): Promise<request.Request | undefined> {
+    const response = await runCrawlRequest<request.Request>(
+      getCrawlingResults,
+      {
+        params: {
+          id,
+        },
+      }
+    );
+    if (response.error) {
+      console.log(response.error);
+      return;
+    }
+    if (response.data) {
+      return response.data;
+    }
+  }
+
   return (
     <StyledForm onSubmit={handleSubmit}>
-      <StyledWrapper className={emptySubmission ? "shake" : ""}>
+      <StyledWrapper className={shakeForm ? "shake" : ""}>
         <SearchIcon className="search-icon" />
         <StyledInput
           id="keyword-input"
@@ -46,7 +113,7 @@ const KeywordForm = ({
           value={keyword}
           onChange={handleChange}
         />
-        {!isLoading ? (
+        {!isRequestLoading ? (
           <ActionButton color={"secondary"}>
             <Text
               style={{ fontWeight: "bold", color: "var(--base-color-text)" }}
@@ -64,12 +131,12 @@ const KeywordForm = ({
       </StyledWrapper>
       {formatError && (
         <InputError className="input-error">
-          A palavra chave precisa ter pelo menos 4 caracteres
+          A palavra chave precisa ter entre 4 e 32 caracteres
         </InputError>
       )}
     </StyledForm>
   );
-};
+});
 
 export const InputError = styled.span`
   bottom: 40px;
@@ -84,6 +151,11 @@ export const InputError = styled.span`
   @media (max-width: 600px) {
     bottom: 25px;
     width: 300px;
+  }
+
+  @media (max-width: 320px) {
+    bottom: 20px;
+    width: 200px;
   }
 `;
 

@@ -1,9 +1,9 @@
 import { shallow } from "enzyme";
 import renderer from "react-test-renderer";
 import React from "react";
-import Table from "./index";
+import Table from "../index";
 
-import TableItem from "./TableItem";
+import TableItem from "../TableItem";
 
 describe("Table render test", () => {
   const data = [

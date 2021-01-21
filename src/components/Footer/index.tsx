@@ -4,9 +4,11 @@ import { Text, ContainerWrapper } from "../../styles";
 
 const Footer = () => {
   return (
-    <ContainerWrapper>
+    <ContainerWrapper style={{ padding: "0 30px 0 10px" }}>
       <OzielLogo />
-      <Text style={{ marginLeft: 25 }}>Desenvolvido por Oziel Alves</Text>
+      <Text style={{ marginLeft: 25, textAlign: "center" }}>
+        Desenvolvido por Oziel Alves
+      </Text>
     </ContainerWrapper>
   );
 };

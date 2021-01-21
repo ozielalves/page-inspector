@@ -1,29 +1,15 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import KeywordForm from "./index";
 import { mount, ReactWrapper } from "enzyme";
 
 describe("<KeywordForm />", () => {
   let container: ReactWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>;
   let setKeyword: jest.Mock<any, any>;
-  let setFormatError: jest.Mock<any, any>;
-  let handleSubmit: jest.Mock<any, any>;
 
   beforeAll(() => {
     setKeyword = jest.fn();
-    setFormatError = jest.fn();
-    handleSubmit = jest.fn();
 
-    container = mount(
-      <KeywordForm
-        keyword="123"
-        setKeyword={setKeyword}
-        isLoading={false}
-        setFormatError={setFormatError}
-        emptySubmission={false}
-        handleSubmit={handleSubmit}
-        formatError={false}
-      />
-    );
+    container = mount(<KeywordForm />);
   });
 
   it("can render and change input value", () => {
@@ -32,7 +18,10 @@ describe("<KeywordForm />", () => {
     expect(container.exists("button")).toEqual(true);
 
     const handleChange = jest.spyOn(React, "useState");
-    handleChange.mockImplementation((keyword: string) => [keyword, setKeyword]);
+    handleChange.mockImplementation(((keyword: string) => [
+      keyword,
+      setKeyword,
+    ]) as () => [unknown, Dispatch<unknown>]);
 
     container.find("input").simulate("change");
     expect(setKeyword).toBeTruthy();

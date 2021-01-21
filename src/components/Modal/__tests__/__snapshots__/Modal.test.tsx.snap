@@ -10,7 +10,7 @@ exports[`Modal render test should render the correct Modal title 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-iqHYGH bWniZP"
+      className="sc-iqHYGH bGFLjY"
     >
       <p
         className="sc-gsTCUz sc-dlfnbm hFbaQT kWkuPj"

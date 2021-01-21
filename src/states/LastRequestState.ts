@@ -1,11 +1,6 @@
 import { observable, action } from 'mobx';
 
-export interface IRequest {
-  apiId: string;
-  keyword: string;
-}
-
-class RequestState {
+class LastRequestState {
   @observable apiId: string = "";
 
   @observable keyword: string = "";
@@ -18,4 +13,4 @@ class RequestState {
   };
 }
 
-export const requestState = new RequestState();
+export const lastRequestState = new LastRequestState();

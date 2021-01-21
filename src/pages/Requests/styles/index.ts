@@ -20,11 +20,9 @@ export const PageHeader = styled.div`
 
 export const RefreshWrapper = styled(Wrapper)`
   justify-content: flex-end;
-  padding-left: 20px;
 
   div > button {
     transition: display 1s ease;
-    margin-left: 17px;
     padding: 10px 20px;
     
     > p {
@@ -51,12 +49,6 @@ export const RefreshWrapper = styled(Wrapper)`
           display: none;
         }
       }
-  }
-
-  @media (max-width: 320px) {
-    div > button {
-      margin-left: 0px;
-    }
   }
 `;
 
@@ -127,6 +119,10 @@ export const UrlBox = styled.div`
   &::-webkit-scrollbar-thumb {
     background: #8c8c8c;
     border-radius: 10px;
+  }
+
+  @media (max-width: 320px) {
+    height: 52%;
   }
 `;
 

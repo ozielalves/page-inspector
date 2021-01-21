@@ -6,7 +6,6 @@ export const Title = styled.h1`
   font-style: normal;
   font-weight: bold;
   font-size: 48px;
-  line-height: 59px;
 
   @media (max-width: 600px) {
     text-align: left;
