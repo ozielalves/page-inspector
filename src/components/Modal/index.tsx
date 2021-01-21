@@ -56,6 +56,12 @@ const ModalHeader = styled.div`
   border-left: none;
   border-right: none;
   border-top: none;
+
+  @media (max-width: 320px) {
+    div {
+      display: none;
+    }
+  }
 `;
 
 const ModalBackdrop = styled.div`

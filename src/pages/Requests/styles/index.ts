@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import { Title, Wrapper } from "../../../styles";
 
-
 export const HeaderTitle = styled(Title)`
   margin: 0 17px;
 
   @media (max-width: 850px) {
     font-size: 1.8rem;
   }
-  @media(max-width: 300px) {
+  @media (max-width: 300px) {
     margin: 0;
   }
 `;
@@ -53,6 +52,12 @@ export const RefreshWrapper = styled(Wrapper)`
         }
       }
   }
+
+  @media (max-width: 320px) {
+    div > button {
+      margin-left: 0px;
+    }
+  }
 `;
 
 export const PageContent = styled.div`
@@ -92,13 +97,13 @@ export const Details = styled.div`
   }
 
   @keyframes rotation {
-		from {
-				transform: rotate(0deg);
-		}
-		to {
-				transform: rotate(360deg);
-		}
-}
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 export const UrlBox = styled.div`
