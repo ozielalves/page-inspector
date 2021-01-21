@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table render test should render the correct Table 1`] = `
+<div
+  className="sc-gKsewC sc-fodVxV eygLjf gyzLBv"
+>
+  <div
+    className="sc-jSgupP sc-pFZIQ sc-kstrdz gmVoiw eoaBsr jsLnef"
+  >
+    <div
+      className="sc-gKsewC sc-jrAGrp eygLjf jIqWmM"
+    >
+      <p
+        className="sc-gsTCUz sc-hBEYos hFbaQT eOjMou"
+        style={
+          Object {
+            "whiteSpace": "normal",
+          }
+        }
+      >
+        Palavra Chave
+      </p>
+    </div>
+    <div
+      className="sc-gKsewC sc-jrAGrp eygLjf jIqWmM"
+      style={
+        Object {
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <p
+        className="sc-gsTCUz sc-hBEYos hFbaQT eOjMou"
+      >
+        Status
+      </p>
+    </div>
+    <div
+      className="sc-bqyKva fAChft"
+    />
+  </div>
+  <div
+    className="sc-gKsewC sc-fodVxV sc-fFubgz eygLjf gyzLBv bEOkRe"
+  >
+    <div
+      className="sc-jSgupP sc-pFZIQ sc-crrsfI gmVoiw eoaBsr jfeaQS"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "var(--base-color-green)",
+        }
+      }
+    >
+      <div />
+      <div
+        className="sc-gKsewC sc-jrAGrp eygLjf jIqWmM"
+      >
+        <p
+          className="sc-gsTCUz sc-dQppl hFbaQT isdmtl"
+        />
+      </div>
+      <div
+        className="sc-gKsewC sc-jrAGrp eygLjf jIqWmM"
+        style={
+          Object {
+            "justifyContent": "flex-end",
+          }
+        }
+      >
+        <p
+          className="sc-gsTCUz sc-dQppl hFbaQT isdmtl"
+        >
+          done
+        </p>
+        <div
+          className="sc-kEjbxe jqePyN"
+          style={
+            Object {
+              "width": "30%",
+            }
+          }
+        >
+          <button
+            onClick={[Function]}
+            style={
+              Object {
+                "background": "var(--base-color-error)",
+              }
+            }
+          >
+            <svg>
+              trash-icon.svg
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="sc-jSgupP sc-pFZIQ sc-crrsfI gmVoiw eoaBsr jfeaQS"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "var(--base-color-deep-orange)",
+        }
+      }
+    >
+      <div />
+      <div
+        className="sc-gKsewC sc-jrAGrp eygLjf jIqWmM"
+      >
+        <p
+          className="sc-gsTCUz sc-dQppl hFbaQT isdmtl"
+        />
+      </div>
+      <div
+        className="sc-gKsewC sc-jrAGrp eygLjf jIqWmM"
+        style={
+          Object {
+            "justifyContent": "flex-end",
+          }
+        }
+      >
+        <progress
+          className="sc-iqHYGH emUSPH"
+          style={
+            Object {
+              "color": "var(--base-color-white)",
+              "height": 30,
+              "width": 30,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

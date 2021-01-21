@@ -44,7 +44,9 @@ const Table = ({ keyword, status, setFilter, id, handleDelete }: TableItemProps)
             </ActionButton>
           </>
         ) : (
+          <>
           <CircularProgress size={30} color={"white"} />
+          </>
         )}
       </TableCell>
     </ClickableTableItem>

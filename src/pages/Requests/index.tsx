@@ -32,7 +32,7 @@ interface ApiRequestResponse {
   urls: string[];
 }
 
-const Requests = observer(() => {
+const RequestsPage = observer(() => {
   const [requests, setRequests] = useState<request.Request[]>();
   const [refreshFlag, setRefreshFlag] = useState(true);
   const [runCrawlRequest] = useRequest();
@@ -151,18 +151,18 @@ const Requests = observer(() => {
         {selectedRequest ? (
           <Content>
             <Details>
-              <ActionButton
-                className={
-                  selectedRequest.status === "active" ? "button-rotate" : ""
-                }
-                color={"secondary"}
-                onClick={() => {
-                  setRefreshFlag(true);
-                }}
-                style={{ width: "30%" }}
-              >
-                <RefreshIcon />
-              </ActionButton>
+              {selectedRequest.status === "active" && (
+                <ActionButton
+                  className={"button-rotate"}
+                  color={"secondary"}
+                  onClick={() => {
+                    setRefreshFlag(true);
+                  }}
+                  style={{ width: "30%" }}
+                >
+                  <RefreshIcon />
+                </ActionButton>
+              )}
               <WrapperColumn>
                 <DetailsText>
                   Palavra Chave:
@@ -223,4 +223,4 @@ const Requests = observer(() => {
   );
 });
 
-export default Requests;
+export default RequestsPage;

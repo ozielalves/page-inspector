@@ -8,7 +8,7 @@ import { SubTitle as LogoText, ContainerWrapper, Wrapper } from "../../styles";
 const Navbar = () => {
   return (
     <StyledWrapper>
-      <Wrapper>
+      <Wrapper style={{ justifyContent: "flex-start" }}>
         <OzielLogo />
         <LogoText style={{ marginLeft: 24 }}>pageinspector</LogoText>
       </Wrapper>
@@ -33,6 +33,7 @@ const Navbar = () => {
 };
 
 const IconsWrapper = styled(Wrapper)`
+  justify-content: flex-end;
   @media (max-width: 320px) {
     display: none;
   }

@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import styled from "styled-components";
 import { PageWrapper, StyledLink, Text, Title } from "../../styles";
-import InspectionRegisterBar from "../../components/InspectionRegisterBar";
+import KeywordForm from "../../components/KeywordForm";
 import ActionButton from "../../components/ActionButton";
 import useRequest, { Endpoint } from "../../hooks/useRequest";
 import { observer } from "mobx-react";
@@ -95,11 +95,11 @@ const Home = observer(() => {
         <Title>Faça uma Inspeção</Title>
         <Subtitle>
           A palavra chave cadastrada será submetida a um serviço de web
-          crawling. É possível acompanhar o status da solicitação clicando em
-          consultar solicitaçãoes.
+          crawling. É possível acompanhar o status de solicitações anteriores
+          clicando em consultar solicitaçãoes.
         </Subtitle>
       </TextContainer>
-      <InspectionRegisterBar
+      <KeywordForm
         handleSubmit={handleSubmit}
         emptySubmission={shakeForm}
         keyword={keyword}

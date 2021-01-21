@@ -15,7 +15,7 @@ interface InspectionRegisterProps {
   setFormatError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const InspectionRegisterBar = ({
+const KeywordForm = ({
   keyword,
   setKeyword,
   handleSubmit,
@@ -37,16 +37,14 @@ const InspectionRegisterBar = ({
       <StyledWrapper className={emptySubmission ? "shake" : ""}>
         <SearchIcon className="search-icon" />
         <StyledInput
-          id="key"
+          id="keyword-input"
           type="text"
-          name="key"
-          /* minLength={4} */
+          name="keyword"
           placeholder="Digite uma palavra chave"
           autoComplete="off"
           autoCapitalize="off"
           value={keyword}
           onChange={handleChange}
-          /* onInvalid={() => setFormatError(true)} */
         />
         {!isLoading ? (
           <ActionButton color={"secondary"}>
@@ -65,7 +63,7 @@ const InspectionRegisterBar = ({
         )}
       </StyledWrapper>
       {formatError && (
-        <InputError>
+        <InputError className="input-error">
           A palavra chave precisa ter pelo menos 4 caracteres
         </InputError>
       )}
@@ -73,7 +71,7 @@ const InspectionRegisterBar = ({
   );
 };
 
-export const InputError = styled.div`
+export const InputError = styled.span`
   bottom: 40px;
   width: 414px;
   font-size: 16px;
@@ -133,4 +131,4 @@ const StyledWrapper = styled(ContainerWrapper)`
   }
 `;
 
-export default InspectionRegisterBar;
+export default KeywordForm;

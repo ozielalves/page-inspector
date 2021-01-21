@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer render test should render the correct Footer correctly 1`] = `
+<div
+  className="sc-jSgupP gmVoiw"
+>
+  <svg>
+    logo-footer-oziel.svg
+  </svg>
+  <p
+    className="sc-gsTCUz hFbaQT"
+    style={
+      Object {
+        "marginLeft": 25,
+      }
+    }
+  >
+    Desenvolvido por Oziel Alves
+  </p>
+</div>
+`;

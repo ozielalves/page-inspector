@@ -16,8 +16,7 @@ body {
   --base-color-border: #e6e6e6;
   --base-color-text: #333333;
   --base-color-error: #ff5863;
-  --base-color-link: #4c8afe;
-  --base-color-link-hover: #6f9ef5;
+  
   font-family: 'Montserrat', 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

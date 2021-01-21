@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar render test should render the correct Navbar correctly 1`] = `
+<div
+  className="sc-jSgupP sc-iqHYGH gmVoiw iZHmQk"
+>
+  <div
+    className="sc-gKsewC eygLjf"
+    style={
+      Object {
+        "justifyContent": "flex-start",
+      }
+    }
+  >
+    <svg>
+      logo-navbar-oziel.svg
+    </svg>
+    <p
+      className="sc-gsTCUz sc-dlfnbm hFbaQT kWkuPj"
+      style={
+        Object {
+          "marginLeft": 24,
+        }
+      }
+    >
+      pageinspector
+    </p>
+  </div>
+  <div
+    className="sc-gKsewC sc-kEjbxe eygLjf eJdoup"
+  >
+    <a
+      href="https://www.linkedin.com/in/ozielalves/"
+      style={
+        Object {
+          "margin": "5px 0 0 24px",
+          "textDecoration": "none",
+        }
+      }
+      title="Linkedin - Oziel Alves"
+    >
+      <svg
+        className="sc-crrsfI dHhAbk"
+      >
+        linkedin-brand.svg
+      </svg>
+    </a>
+    <a
+      href="https://github.com/ozielalves"
+      style={
+        Object {
+          "margin": "5px 0 0 24px",
+          "textDecoration": "none",
+        }
+      }
+      title="GitHub - Oziel Alves"
+    >
+      <svg
+        className="sc-dQppl etXCAW"
+      >
+        github-brand.svg
+      </svg>
+    </a>
+  </div>
+</div>
+`;

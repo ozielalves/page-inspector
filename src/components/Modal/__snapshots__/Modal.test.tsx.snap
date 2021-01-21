@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal render test should render the correct Modal title 1`] = `
+<div
+  className="sc-crrsfI hdGniU"
+  onClick={[Function]}
+>
+  <div
+    className="sc-bqyKva forjPo"
+    onClick={[Function]}
+  >
+    <div
+      className="sc-iqHYGH bWniZP"
+    >
+      <p
+        className="sc-gsTCUz sc-dlfnbm hFbaQT kWkuPj"
+      >
+        Normal Title
+      </p>
+      <div
+        className="sc-kEjbxe jqePyN"
+        style={
+          Object {
+            "position": "absolute",
+            "right": 0,
+          }
+        }
+      >
+        <button
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "transparent",
+            }
+          }
+        >
+          <svg>
+            close-icon.svg
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div
+      className="sc-dQppl iASszO"
+    />
+  </div>
+</div>
+`;
